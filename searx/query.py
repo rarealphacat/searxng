@@ -152,7 +152,7 @@ class LanguageParser(QueryPartParser):
 class ExternalBangParser(QueryPartParser):
     @staticmethod
     def check(raw_value):
-        return raw_value.startswith('!!') and len(raw_value) > 2
+        return raw_value.startswith('!') and len(raw_value) > 2
 
     def __call__(self, raw_value):
         value = raw_value[2:]
@@ -173,14 +173,14 @@ class ExternalBangParser(QueryPartParser):
         if not bang_ac_list:
             bang_ac_list = ['g', 'ddg', 'bing']
         for external_bang in bang_ac_list:
-            self._add_autocomplete('!!' + external_bang)
+            self._add_autocomplete('!' + external_bang)
 
 
 class BangParser(QueryPartParser):
     @staticmethod
     def check(raw_value):
-        # make sure it's not any bang with double '!!'
-        return raw_value[0] == '!' and (len(raw_value) < 2 or raw_value[1] != '!')
+        # make sure it's not any bang with single '!'
+        return raw_value[0] == '!' and (len(raw_value) < 2 or raw_value[1] = '!')
 
     def __call__(self, raw_value):
         value = raw_value[1:].replace('-', ' ').replace('_', ' ')
@@ -241,7 +241,7 @@ class BangParser(QueryPartParser):
 class FeelingLuckyParser(QueryPartParser):
     @staticmethod
     def check(raw_value):
-        return raw_value == '!!'
+        return raw_value == '!'
 
     def __call__(self, raw_value):
         self.raw_text_query.redirect_to_first_result = True
